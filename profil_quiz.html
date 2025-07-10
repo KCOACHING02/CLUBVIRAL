@@ -1,21 +1,3 @@
-Vous avez tout à fait raison de le souligner \! L'empiètement du bouton sur les questions, surtout sur mobile, est un problème courant avec le positionnement absolu si la hauteur du conteneur parent n'est pas gérée dynamiquement.
-
-Le problème venait du fait que `position: absolute` sur les `.question-slide` les sortait du flux normal du document. Le conteneur ne pouvait donc pas "voir" leur hauteur pour s'adapter, ni pour positionner correctement le bouton "Suivant" en dessous.
-
-J'ai modifié la feuille de style pour :
-
-1.  **Retirer `position: absolute` des `.question-slide`** : Les questions sont maintenant dans le flux normal du document, ce qui permet au conteneur de s'ajuster à leur hauteur.
-2.  **Utiliser `display: none/block` avec `opacity` et `transform` pour les transitions** : Les questions apparaîtront et disparaîtront avec un effet de fondu-en-chaîne et une légère translation verticale, plutôt qu'un glissement horizontal complexe. Cela est plus robuste sur différentes tailles d'écran.
-3.  **Adapter le conteneur en Flexbox** : Le `.container` est maintenant un conteneur Flexbox en colonne (`flex-direction: column;`) avec `justify-content: space-between;` et `margin-top: auto;` sur les boutons de navigation. Cela garantit que les boutons sont toujours poussés vers le bas, sous le contenu de la question, quel que soit sa hauteur.
-4.  **Ajustements de marges et padding** : Pour assurer un bon espacement.
-
-Voici le code mis à jour pour `profil_quiz.html`. Les styles CSS ont été affinés pour cette nouvelle approche responsive.
-
------
-
-### Code pour `profil_quiz.html` (Responsive et sans Chevauchement)
-
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
