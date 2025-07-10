@@ -48,7 +48,6 @@
             width: 100%;
             box-sizing: border-box;
             
-            /* Nouveau : Flexbox pour organiser le contenu et pousser les boutons en bas */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -79,29 +78,20 @@
             margin-bottom: 20px;
         }
 
-        /* NOUVEAU : Styles des slides de questions */
-        .question-wrapper {
-            /* Un wrapper pour les questions afin de gérer les transitions d'opacité et de position */
-            position: relative; /* Pour que les slides à l'intérieur soient positionnés par rapport à lui */
-            flex-grow: 1; /* Prend l'espace disponible */
-            min-height: 250px; /* Assure une hauteur minimale pour les questions */
-            overflow: hidden; /* Cache les questions en transition */
-        }
+        /* Styles des slides de questions */
         .question-slide {
             display: none; /* Cache toutes les questions par défaut */
             opacity: 0;
             transform: translateY(20px); /* Commence légèrement en dessous pour l'effet d'apparition */
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-            position: absolute; /* Position absolue pour les superposer et animer */
-            top: 0;
-            left: 0;
-            width: 100%;
+            /* Retire le positionnement absolu pour laisser le navigateur gérer le flux */
+            margin-bottom: 20px; /* Ajoute un espace en bas pour éviter le chevauchement */
+            flex-grow: 1; /* Permet à la question de prendre l'espace disponible */
         }
         .question-slide.active {
             display: block; /* Affiche la question active */
             opacity: 1;
             transform: translateY(0); /* Remonte à sa position normale */
-            position: relative; /* Réintègre la question active dans le flux pour que le conteneur s'adapte */
         }
         
         h2.question-title {
@@ -166,7 +156,7 @@
         .navigation-buttons {
             display: flex;
             justify-content: space-between;
-            /* margin-top: auto; est déplacé vers le JS pour le gestionnaire d'événements */
+            margin-top: auto; /* Pousse les boutons vers le bas dans un conteneur flex */
             padding-top: 20px; /* Espace au-dessus des boutons */
             border-top: 1px solid var(--border-light); /* Ligne de séparation */
         }
@@ -211,7 +201,7 @@
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
-                min-height: 400px; /* Ajustement pour mobile si nécessaire */
+                min-height: 400px;
             }
             h2.question-title {
                 font-size: 1.5rem;
@@ -243,169 +233,169 @@
         <p class="progress-text" id="progressText">Question 1 / 5</p>
 
         <form id="quizForm">
-            <div class="question-wrapper">
-                <div class="question-slide" data-question-id="1">
-                    <h2 class="question-title">Quel est votre objectif principal en explorant la vente sur les réseaux sociaux ?</h2>
-                    <div class="options-group">
-                        <div>
-                            <input type="radio" id="obj1" name="q1_objective" value="Vivre de ma passion" required>
-                            <label for="obj1" class="option-label">
-                                <i class="fas fa-heart"></i> <span>Vivre pleinement de ma passion et en faire mon métier.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="obj2" name="q1_objective" value="Quitter mon emploi" required>
-                            <label for="obj2" class="option-label">
-                                <i class="fas fa-briefcase-medical"></i> <span>Quitter mon emploi actuel et devenir mon propre patron.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="obj3" name="q1_objective" value="Indépendance financière" required>
-                            <label for="obj3" class="option-label">
-                                <i class="fas fa-dollar-sign"></i> <span>Atteindre l'indépendance financière et avoir plus de liberté.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="obj4" name="q1_objective" value="Arrondir fins de mois" required>
-                            <label for="obj4" class="option-label">
-                                <i class="fas fa-coins"></i> <span>Arrondir mes fins de mois ou générer un revenu complémentaire.</span>
-                            </label>
-                        </div>
-                         <div>
-                            <input type="radio" id="obj5" name="q1_objective" value="Revenus stables" required>
-                            <label for="obj5" class="option-label">
-                                <i class="fas fa-chart-line"></i> <span>Développer une source de revenus stable et évolutive.</span>
-                            </label>
-                        </div>
+            <div class="question-slide" data-question-id="1">
+                <h2 class="question-title">Quel est votre objectif principal en explorant la vente sur les réseaux sociaux ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="obj1" name="q1_objective" value="Vivre de ma passion" required>
+                        <label for="obj1" class="option-label">
+                            <i class="fas fa-heart"></i> <span>Vivre pleinement de ma passion et en faire mon métier.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="obj2" name="q1_objective" value="Quitter mon emploi" required>
+                        <label for="obj2" class="option-label">
+                            <i class="fas fa-briefcase-medical"></i> <span>Quitter mon emploi actuel et devenir mon propre patron.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="obj3" name="q1_objective" value="Indépendance financière" required>
+                        <label for="obj3" class="option-label">
+                            <i class="fas fa-dollar-sign"></i> <span>Atteindre l'indépendance financière et avoir plus de liberté.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="obj4" name="q1_objective" value="Arrondir fins de mois" required>
+                        <label for="obj4" class="option-label">
+                            <i class="fas fa-coins"></i> <span>Arrondir mes fins de mois ou générer un revenu complémentaire.</span>
+                        </label>
+                    </div>
+                     <div>
+                        <input type="radio" id="obj5" name="q1_objective" value="Revenus stables" required>
+                        <label for="obj5" class="option-label">
+                            <i class="fas fa-chart-line"></i> <span>Développer une source de revenus stable et évolutive.</span>
+                        </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="question-slide" data-question-id="2">
-                    <h2 class="question-title">Quelle est votre principale difficulté actuelle pour générer des ventes sur les réseaux sociaux ?</h2>
-                    <div class="options-group">
-                        <div>
-                            <input type="radio" id="diff1" name="q2_difficulty" value="Attirer prospects" required>
-                            <label for="diff1" class="option-label">
-                                <i class="fas fa-user-plus"></i> <span>Attirer de nouveaux prospects qualifiés et intéressés.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="diff2" name="q2_difficulty" value="Convertir abonnés" required>
-                            <label for="diff2" class="option-label">
-                                <i class="fas fa-shopping-cart"></i> <span>Convertir mes abonnés ou mes contacts en acheteurs.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="diff3" name="q2_difficulty" value="Créer contenu" required>
-                            <label for="diff3" class="option-label">
-                                <i class="fas fa-pencil-alt"></i> <span>Créer du contenu qui capte l'attention et pousse à l'achat.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="diff4" name="q2_difficulty" value="Comprendre algorithmes" required>
-                            <label for="diff4" class="option-label">
-                                <i class="fas fa-cogs"></i> <span>Comprendre et maîtriser les algorithmes des plateformes.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="diff5" name="q2_difficulty" value="Manque temps stratégie" required>
-                            <label for="diff5" class="option-label">
-                                <i class="fas fa-hourglass-half"></i> <span>Manque de temps ou de stratégie claire et efficace.</span>
-                            </label>
-                        </div>
+            <div class="question-slide" data-question-id="2">
+                <h2 class="question-title">Quelle est votre principale difficulté actuelle pour générer des ventes sur les réseaux sociaux ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="diff1" name="q2_difficulty" value="Attirer prospects" required>
+                        <label for="diff1" class="option-label">
+                            <i class="fas fa-user-plus"></i> <span>Attirer de nouveaux prospects qualifiés et intéressés.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff2" name="q2_difficulty" value="Convertir abonnés" required>
+                        <label for="diff2" class="option-label">
+                            <i class="fas fa-shopping-cart"></i> <span>Convertir mes abonnés ou mes contacts en acheteurs.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff3" name="q2_difficulty" value="Créer contenu" required>
+                        <label for="diff3" class="option-label">
+                            <i class="fas fa-pencil-alt"></i> <span>Créer du contenu qui capte l'attention et pousse à l'achat.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff4" name="q2_difficulty" value="Comprendre algorithmes" required>
+                        <label for="diff4" class="option-label">
+                            <i class="fas fa-cogs"></i> <span>Comprendre et maîtriser les algorithmes des plateformes.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff5" name="q2_difficulty" value="Manque temps stratégie" required>
+                        <label for="diff5" class="option-label">
+                            <i class="fas fa-hourglass-half"></i> <span>Manque de temps ou de stratégie claire et efficace.</span>
+                        </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="question-slide" data-question-id="3">
-                    <h2 class="question-title">Quel est votre niveau d'engagement sur les réseaux sociaux au quotidien ?</h2>
-                    <div class="options-group">
-                        <div>
-                            <input type="radio" id="eng1" name="q3_engagement" value="Consommateur passif" required>
-                            <label for="eng1" class="option-label">
-                                <i class="fas fa-eye"></i> <span>Je suis plutôt un consommateur passif, je regarde plus que je n'interagis.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="eng2" name="q3_engagement" value="Utilisateur actif" required>
-                            <label for="eng2" class="option-label">
-                                <i class="fas fa-comment-dots"></i> <span>Je suis un utilisateur actif, je commente et j'aime régulièrement.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="eng3" name="q3_engagement" value="Créateur occasionnel" required>
-                            <label for="eng3" class="option-label">
-                                <i class="fas fa-camera"></i> <span>Je crée du contenu occasionnellement pour mon profil personnel ou professionnel.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="eng4" name="q3_engagement" value="Créateur régulier" required>
-                            <label for="eng4" class="option-label">
-                                <i class="fas fa-share-alt"></i> <span>Je crée et partage du contenu régulièrement avec l'objectif de développer ma présence.</span>
-                            </label>
-                        </div>
+            <div class="question-slide" data-question-id="3">
+                <h2 class="question-title">Quel est votre niveau d'engagement sur les réseaux sociaux au quotidien ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="eng1" name="q3_engagement" value="Consommateur passif" required>
+                        <label for="eng1" class="option-label">
+                            <i class="fas fa-eye"></i> <span>Je suis plutôt un consommateur passif, je regarde plus que je n'interagis.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="eng2" name="q3_engagement" value="Utilisateur actif" required>
+                        <label for="eng2" class="option-label">
+                            <i class="fas fa-comment-dots"></i> <span>Je suis un utilisateur actif, je commente et j'aime régulièrement.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="eng3" name="q3_engagement" value="Créateur occasionnel" required>
+                        <label for="eng3" class="option-label">
+                            <i class="fas fa-camera"></i> <span>Je crée du contenu occasionnellement pour mon profil personnel ou professionnel.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="eng4" name="q3_engagement" value="Créateur régulier" required>
+                        <label for="eng4" class="option-label">
+                            <i class="fas fa-share-alt"></i> <span>Je crée et partage du contenu régulièrement avec l'objectif de développer ma présence.</span>
+                        </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="question-slide" data-question-id="4">
-                    <h2 class="question-title">Qu'est-ce qui vous freine le plus aujourd'hui dans le développement de vos ventes en ligne ?</h2>
-                    <div class="options-group">
-                        <div>
-                            <input type="radio" id="frein1" name="q4_frein" value="Peur de l'échec" required>
-                            <label for="frein1" class="option-label">
-                                <i class="fas fa-frown"></i> <span>La peur de l'échec ou de ne pas être à la hauteur.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="frein2" name="q4_frein" value="Manque de connaissances" required>
-                            <label for="frein2" class="option-label">
-                                <i class="fas fa-book"></i> <span>Le manque de connaissances et de techniques spécifiques.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="frein3" name="q4_frein" value="Manque de temps" required>
-                            <label for="frein3" class="option-label">
-                                <i class="fas fa-clock"></i> <span>Le temps que cela demande et la difficulté à s'organiser.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="frein4" name="q4_frein" value="Compétences techniques" required>
-                            <label for="frein4" class="option-label">
-                                <i class="fas fa-laptop-code"></i> <span>Mes compétences techniques limitées avec les outils en ligne.</span>
-                            </label>
-                        </div>
+            <div class="question-slide" data-question-id="4">
+                <h2 class="question-title">Qu'est-ce qui vous freine le plus aujourd'hui dans le développement de vos ventes en ligne ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="frein1" name="q4_frein" value="Peur de l'échec" required>
+                        <label for="frein1" class="option-label">
+                            <i class="fas fa-frown"></i> <span>La peur de l'échec ou de ne pas être à la hauteur.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="frein2" name="q4_frein" value="Manque de connaissances" required>
+                        <label for="frein2" class="option-label">
+                            <i class="fas fa-book"></i> <span>Le manque de connaissances et de techniques spécifiques.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="frein3" name="q4_frein" value="Manque de temps" required>
+                        <label for="frein3" class="option-label">
+                            <i class="fas fa-clock"></i> <span>Le temps que cela demande et la difficulté à s'organiser.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="frein4" name="q4_frein" value="Compétences techniques" required>
+                        <label for="frein4" class="option-label">
+                            <i class="fas fa-laptop-code"></i> <span>Mes compétences techniques limitées avec les outils en ligne.</span>
+                        </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="question-slide" data-question-id="5">
-                    <h2 class="question-title">Êtes-vous prêt(e) à investir du temps et de l'énergie dans une approche structurée pour transformer vos ventes et atteindre vos objectifs ?</h2>
-                    <div class="options-group">
-                        <div>
-                            <input type="radio" id="ready1" name="q5_readiness" value="Oui, absolument" required>
-                            <label for="ready1" class="option-label">
-                                <i class="fas fa-rocket"></i> <span>Oui, absolument ! Je suis ultra-motivé(e) et prêt(e) à tout mettre en œuvre.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="ready2" name="q5_readiness" value="Oui, si résultats concrets" required>
-                            <label for="ready2" class="option-label">
-                                <i class="fas fa-lightbulb"></i> <span>Oui, si cela m'apporte des résultats concrets et mesurables.</span>
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="ready3" name="q5_readiness" value="J'hésite" required>
-                            <label for="ready3" class="option-label">
-                                <i class="fas fa-question-circle"></i> <span>J'y pense, mais j'hésite encore sur l'engagement à long terme.</span>
-                            </label>
-                        </div>
-                         <div>
-                            <input type="radio" id="ready4" name="q5_readiness" value="Pas vraiment" required>
-                            <label for="ready4" class="option-label">
-                                <i class="fas fa-times-circle"></i> <span>Pas vraiment, je cherche plutôt des solutions rapides sans effort majeur.</span>
-                            </label>
-                        </div>
+            <div class="question-slide" data-question-id="5">
+                <h2 class="question-title">Êtes-vous prêt(e) à investir du temps et de l'énergie dans une approche structurée pour transformer vos ventes et atteindre vos objectifs ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="ready1" name="q5_readiness" value="Oui, absolument" required>
+                        <label for="ready1" class="option-label">
+                            <i class="fas fa-rocket"></i> <span>Oui, absolument ! Je suis ultra-motivé(e) et prêt(e) à tout mettre en œuvre.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="ready2" name="q5_readiness" value="Oui, si résultats concrets" required>
+                        <label for="ready2" class="option-label">
+                            <i class="fas fa-lightbulb"></i> <span>Oui, si cela m'apporte des résultats concrets et mesurables.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="ready3" name="q5_readiness" value="J'hésite" required>
+                        <label for="ready3" class="option-label">
+                            <i class="fas fa-question-circle"></i> <span>J'y pense, mais j'hésite encore sur l'engagement à long terme.</span>
+                        </label>
+                    </div>
+                     <div>
+                        <input type="radio" id="ready4" name="q5_readiness" value="Pas vraiment" required>
+                        <label for="ready4" class="option-label">
+                            <i class="fas fa-times-circle"></i> <span>Pas vraiment, je cherche plutôt des solutions rapides sans effort majeur.</span>
+                        </label>
                     </div>
                 </div>
-            </div> <div class="navigation-buttons">
+            </div>
+
+            <div class="navigation-buttons">
                 <button type="button" class="nav-button prev" id="prevButton"><i class="fas fa-arrow-left"></i> Précédent</button>
                 <button type="submit" class="nav-button next" id="nextButton">Suivant <i class="fas fa-arrow-right"></i></button>
             </div>
@@ -441,24 +431,19 @@
 
         function showQuestion(index) {
             questions.forEach((q, i) => {
-                if (q.classList.contains('active')) {
-                    // Start fading out and moving the current active question
-                    q.style.opacity = '0';
-                    q.style.transform = 'translateY(20px)';
-                    // After the transition, hide it completely
-                    setTimeout(() => {
-                        q.style.display = 'none';
-                        q.classList.remove('active'); // Remove active class after animation
-                    }, 500); // Match CSS transition duration
-                }
+                // Cache toutes les questions
+                q.classList.remove('active');
+                q.style.opacity = '0';
+                q.style.transform = 'translateY(20px)';
+                q.style.display = 'none'; // Cache complètement après transition si pas active
             });
 
-            // Show the new question
+            // Affiche la nouvelle question
             const newQuestion = questions[index];
-            newQuestion.style.display = 'block';
-            // A small delay to ensure display:block takes effect before starting transition
+            newQuestion.style.display = 'block'; // Rend visible d'abord
+            // Petit délai pour permettre au navigateur d'appliquer 'display: block' avant la transition
             setTimeout(() => {
-                newQuestion.classList.add('active'); // Add active class to start fade-in
+                newQuestion.classList.add('active'); // Déclenche la transition d'opacité et de transform
                 newQuestion.style.opacity = '1';
                 newQuestion.style.transform = 'translateY(0)';
             }, 50);
@@ -468,13 +453,18 @@
 
         function checkIfAnswerSelected() {
             const currentQuestionElement = questions[currentQuestionIndex];
+            // S'assurer que currentQuestionElement existe avant de tenter d'accéder à ses propriétés
+            if (!currentQuestionElement) {
+                nextButton.disabled = true; // Si la question n'est pas trouvée, désactiver le bouton
+                return;
+            }
             const radioGroupName = currentQuestionElement.querySelector('input[type="radio"]').name;
             const selectedOption = quizForm.querySelector(`input[name="${radioGroupName}"]:checked`);
             nextButton.disabled = !selectedOption;
         }
 
         quizForm.addEventListener('change', function(event) {
-            if (event.target.type === 'radio' && event.target.closest('.question-slide').classList.contains('active')) {
+            if (event.target.type === 'radio' && event.target.closest('.question-slide')) {
                 checkIfAnswerSelected();
             }
         });
@@ -483,6 +473,11 @@
             event.preventDefault();
 
             const currentQuestionElement = questions[currentQuestionIndex];
+            if (!currentQuestionElement) { // Sécurité supplémentaire
+                console.error("Erreur: Impossible de trouver la question actuelle à l'index", currentQuestionIndex);
+                return;
+            }
+
             const radioGroupName = currentQuestionElement.querySelector('input[type="radio"]').name;
             const selectedOption = quizForm.querySelector(`input[name="${radioGroupName}"]:checked`);
 
@@ -492,7 +487,8 @@
             }
 
             userAnswers[radioGroupName] = selectedOption.value;
-            console.log("Réponse enregistrée:", userAnswers);
+            console.log("Réponse enregistrée pour", radioGroupName, ":", selectedOption.value);
+            console.log("Toutes les réponses de l'utilisateur:", userAnswers);
 
             if (currentQuestionIndex < totalQuestions - 1) {
                 currentQuestionIndex++;
@@ -500,7 +496,8 @@
             } else {
                 console.log("Quiz Terminé! Réponses finales:", userAnswers);
                 localStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
-                window.location.href = 'profil_resultat.html';
+                // Redirection vers la page de résultat/transition finale
+                window.location.href = 'profil_resultat.html'; 
             }
         });
 
@@ -517,4 +514,3 @@
 
 </body>
 </html>
-```
