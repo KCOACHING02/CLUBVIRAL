@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCoaching - Quiz Profil Vendeur</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --secondary-orange: #ff7f50;
+            --text-dark: #2c3e50;
+            --text-medium: #555;
+            --text-light: #777;
+            --bg-light: #f4f7f6;
+            --bg-white: #ffffff;
+            --border-light: #eee;
+            --shadow-light: rgba(0,0,0,0.08);
+            --shadow-medium: rgba(0,0,0,0.12);
+            --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e8f0ef 100%);
+            color: var(--text-medium);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: var(--bg-white);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px var(--shadow-light);
+            max-width: 700px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative; /* Pour positionner la barre de progression */
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--border-light);
+            border-radius: 5px;
+            height: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%; /* Sera ajusté par JS */
+            background-color: var(--primary-blue);
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: var(--text-medium);
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        h2.question-title {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .options-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2 colonnes ou 1 si petit écran */
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .option-label {
+            background-color: var(--bg-light);
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            min-height: 80px; /* Pour uniformiser la taille */
+        }
+        .option-label:hover {
+            background-color: #e0e4e3;
+            border-color: var(--primary-blue);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
+        }
+        .option-label i {
+            font-size: 1.8em;
+            color: var(--primary-blue);
+        }
+        .option-label span {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Style pour l'option sélectionnée */
+        input[type="radio"] {
+            display: none;
+        }
+        input[type="radio"]:checked + .option-label {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        input[type="radio"]:checked + .option-label i,
+        input[type="radio"]:checked + .option-label span {
+            color: white; /* Texte et icône en blanc quand sélectionné */
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .nav-button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-button.prev {
+            background-color: var(--bg-light);
+            color: var(--text-medium);
+        }
+        .nav-button.prev:hover {
+            background-color: #ddd;
+            transform: translateY(-2px);
+        }
+        .nav-button.next {
+            background-color: var(--secondary-orange);
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 127, 80, 0.3);
+        }
+        .nav-button.next:hover {
+            background-color: #e66a3d;
+            transform: translateY(-2px);
+        }
+        .nav-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h2.question-title {
+                font-size: 1.5rem;
+            }
+            .options-group {
+                grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+            }
+            .option-label {
+                padding: 15px;
+                gap: 10px;
+                min-height: auto;
+            }
+            .option-label span {
+                font-size: 1rem;
+            }
+            .nav-button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">Question 1 / 5</p>
+
+        <form id="quizForm">
+            <div class="question-slide active" data-question-id="1">
+                <h2 class="question-title">Quel est votre objectif principal en explorant la vente sur les réseaux sociaux ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="obj1" name="objective" value="Vivre de ma passion" required>
+                        <label for="obj1" class="option-label">
+                            <i class="fas fa-heart"></i> <span>Vivre pleinement de ma passion et en faire mon métier.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="obj2" name="objective" value="Quitter mon emploi" required>
+                        <label for="obj2" class="option-label">
+                            <i class="fas fa-briefcase-medical"></i> <span>Quitter mon emploi actuel et devenir mon propre patron.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="obj3" name="objective" value="Indépendance financière" required>
+                        <label for="obj3" class="option-label">
+                            <i class="fas fa-dollar-sign"></i> <span>Atteindre l'indépendance financière et avoir plus de liberté.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="obj4" name="objective" value="Arrondir fins de mois" required>
+                        <label for="obj4" class="option-label">
+                            <i class="fas fa-coins"></i> <span>Arrondir mes fins de mois ou générer un revenu complémentaire.</span>
+                        </label>
+                    </div>
+                     <div>
+                        <input type="radio" id="obj5" name="objective" value="Revenus stables" required>
+                        <label for="obj5" class="option-label">
+                            <i class="fas fa-chart-line"></i> <span>Développer une source de revenus stable et évolutive.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button type="button" class="nav-button prev" id="prevButton" style="visibility: hidden;"><i class="fas fa-arrow-left"></i> Précédent</button>
+                <button type="submit" class="nav-button next" id="nextButton">Suivant <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const quizForm = document.getElementById('quizForm');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const progressText = document.getElementById('progressText');
+        const nextButton = document.getElementById('nextButton');
+        const prevButton = document.getElementById('prevButton');
+        let currentQuestionIndex = 0;
+        const questions = document.querySelectorAll('.question-slide'); // Chaque question est un "slide"
+        const totalQuestions = questions.length; // Pour l'instant 1, mais sera ajusté
+
+        // Simule un stockage des réponses. En production, on utiliserait localStorage ou une base de données.
+        let userAnswers = {}; 
+
+        // Initialisation de la barre de progression (pour l'exemple avec 5 questions totales)
+        const quizMaxQuestions = 5; // Définissez le nombre total de questions que vous prévoyez
+        
+        function updateProgressBar() {
+            const progressPercentage = ((currentQuestionIndex + 1) / quizMaxQuestions) * 100;
+            progressBarFill.style.width = `${progressPercentage}%`;
+            progressText.textContent = `Question ${currentQuestionIndex + 1} / ${quizMaxQuestions}`;
+            
+            // Masquer/afficher les boutons de navigation
+            if (currentQuestionIndex === 0) {
+                prevButton.style.visibility = 'hidden';
+            } else {
+                prevButton.style.visibility = 'visible';
+            }
+
+            // Si c'est la dernière question, le bouton "Suivant" deviendra "Terminer"
+            if (currentQuestionIndex === totalQuestions -1 && totalQuestions === quizMaxQuestions) { // Vérifie si c'est la dernière question ET la dernière étape du quiz
+                 nextButton.innerHTML = 'Terminer <i class="fas fa-check"></i>';
+            } else {
+                 nextButton.innerHTML = 'Suivant <i class="fas fa-arrow-right"></i>';
+            }
+        }
+
+        function showQuestion(index) {
+            questions.forEach((q, i) => {
+                q.classList.remove('active');
+                if (i === index) {
+                    q.classList.add('active');
+                }
+            });
+            updateProgressBar();
+            // Désactiver le bouton suivant si aucune option n'est sélectionnée
+            const selectedOption = quizForm.querySelector(`input[name="objective"]:checked`);
+            nextButton.disabled = !selectedOption;
+        }
+
+        quizForm.addEventListener('change', function(event) {
+            // Activer le bouton Suivant dès qu'une option est choisie
+            if (event.target.type === 'radio' && event.target.name === 'objective') {
+                nextButton.disabled = false;
+            }
+        });
+
+
+        quizForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche la soumission du formulaire par défaut
+
+            const selectedOption = quizForm.querySelector('input[name="objective"]:checked');
+            if (!selectedOption) {
+                alert("Veuillez sélectionner une option pour continuer.");
+                return;
+            }
+
+            // Enregistre la réponse
+            userAnswers[`q${currentQuestionIndex + 1}`] = selectedOption.value;
+            console.log("Réponse enregistrée:", userAnswers); // Pour le débogage
+
+            // Logique pour passer à la question suivante ou terminer le quiz
+            if (currentQuestionIndex < totalQuestions - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            } else {
+                // Pour l'instant, quand toutes les questions sont répondues, on simule une redirection
+                // En réalité, vous enverriez les userAnswers à profil_resultat.html
+                // Via localStorage, sessionStorage, ou paramètres d'URL si peu de données
+                console.log("Quiz Terminé! Réponses finales:", userAnswers);
+
+                // Exemple de redirection vers la page de résultats
+                // Pour passer les réponses, on peut les stocker temporairement ou les passer en paramètres d'URL (limité en taille)
+                localStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
+                window.location.href = 'profil_resultat.html';
+            }
+        });
+
+        prevButton.addEventListener('click', function() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        });
+
+        // Initialiser le quiz
+        showQuestion(currentQuestionIndex);
+    </script>
+
+</body>
+</html>
