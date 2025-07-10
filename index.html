@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KCoaching - Découvrez Votre Potentiel Ventes Sociales</title>
+    <title>KCoaching - Ton Profil Révélé !</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,59 +37,86 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            text-align: center;
         }
         .container {
             background-color: var(--bg-white);
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 8px 30px var(--shadow-light);
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
-            text-align: center;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px; 
         }
+
         h1 {
             font-size: 2.5rem;
             color: var(--primary-blue);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 700;
-            letter-spacing: -0.03em;
-        }
-        p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            color: var(--text-dark);
-        }
-        .start-button {
-            display: inline-flex; /* Pour centrer le contenu */
-            align-items: center;
-            gap: 10px;
-            padding: 15px 30px;
-            background-color: var(--secondary-orange);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(255, 127, 80, 0.3);
-        }
-        .start-button:hover {
-            background-color: #e66a3d;
-            transform: translateY(-2px);
-        }
-        .start-button i {
-            font-size: 1.4rem;
         }
 
-        @media (max-width: 600px) {
+        p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .cta-image {
+            max-width: 250px; 
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-orange);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 15px rgba(255, 127, 80, 0.4);
+            letter-spacing: 0.5px;
+            border: none; 
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #e66a3d;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 127, 80, 0.5);
+        }
+
+        .cta-button i {
+            margin-left: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                gap: 20px;
+            }
             h1 {
                 font-size: 2rem;
             }
             p {
                 font-size: 1rem;
             }
-            .start-button {
+            .cta-image {
+                max-width: 200px;
+            }
+            .cta-button {
                 padding: 12px 25px;
                 font-size: 1.1rem;
             }
@@ -99,10 +126,18 @@
 <body>
 
     <div class="container">
-        <h1>Découvrez le Profil du Vendeur Social en Vous ! <i class="fas fa-lightbulb"></i></h1>
-        <p>Répondez à quelques questions simples pour cerner votre potentiel et découvrir si notre formation est la clé pour propulser vos ventes sur les réseaux sociaux et atteindre vos objectifs de vie.</p>
-        <a href="profil_quiz.html" class="start-button">
-            Commencer le Test <i class="fas fa-arrow-right"></i>
+        <h1>Félicitations, ton profil est complet !</h1>
+        
+        <p>Après ce quiz, une chose est claire : **tu possèdes le profil idéal pour te lancer et faire décoller ton business en ligne !** Tes réponses montrent une réelle motivation et une compréhension des enjeux. C'est exactement l'état d'esprit qu'il te faut pour réussir. Le moment est venu de transformer cette vision en réalité.</p>
+
+        <img src="BRILLEETVIBRE.jpeg" alt="Logo KCoaching" class="cta-image">
+
+        <p>Tu as maintenant une vision plus claire de tes objectifs et de tes défis. Le monde de la vente sur les réseaux sociaux regorge d'opportunités passionnantes. Avec la bonne stratégie, tu peux transformer ta passion en revenus, attirer des clients fidèles et enfin atteindre la liberté financière que tu désires.</p>
+        
+        <p>Ne laisse plus les doutes te freiner ! Il est temps de passer à l'action et de débloquer ton plein potentiel. Découvre comment nous pouvons t'aider à propulser tes ventes en ligne dès aujourd'hui.</p>
+
+        <a href="https://stan.store/affiliates/80c38116-8aa0-4d1f-9199-39de2694025b" target="_blank" class="cta-button">
+            Découvrir l'Opportunité <i class="fas fa-arrow-right"></i>
         </a>
     </div>
 
