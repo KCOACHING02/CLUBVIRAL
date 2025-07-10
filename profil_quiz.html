@@ -51,8 +51,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 450px; /* Hauteur minimale, s'adaptera si le contenu est plus grand */
-            position: relative; /* Pour le contexte de stacking */
+            min-height: 450px; 
+            position: relative; 
         }
 
         .progress-bar-container {
@@ -65,7 +65,7 @@
         }
         .progress-bar-fill {
             height: 100%;
-            width: 0%; /* Sera ajusté par JS */
+            width: 0%; 
             background-color: var(--primary-blue);
             border-radius: 5px;
             transition: width 0.5s ease-in-out;
@@ -80,17 +80,17 @@
 
         /* Styles des slides de questions */
         .question-slide {
-            display: none; /* Cache toutes les questions par défaut */
+            display: none; 
             opacity: 0;
-            transform: translateY(20px); /* Commence légèrement en dessous pour l'effet d'apparition */
+            transform: translateY(20px);
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-            margin-bottom: 20px; /* Ajoute un espace en bas pour éviter le chevauchement */
-            flex-grow: 1; /* Permet à la question de prendre l'espace disponible */
+            margin-bottom: 20px; 
+            flex-grow: 1; 
         }
         .question-slide.active {
-            display: block; /* Affiche la question active */
+            display: block; 
             opacity: 1;
-            transform: translateY(0); /* Remonte à sa position normale */
+            transform: translateY(0); 
         }
         
         h2.question-title {
@@ -103,9 +103,9 @@
 
         .options-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2 colonnes ou 1 si petit écran */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 20px;
-            margin-bottom: 30px; /* Espace avant les boutons de navigation */
+            margin-bottom: 30px; 
         }
 
         .option-label {
@@ -119,7 +119,7 @@
             align-items: center;
             gap: 15px;
             text-align: left;
-            min-height: 80px; /* Pour uniformiser la taille */
+            min-height: 80px; 
         }
         .option-label:hover {
             background-color: #e0e4e3;
@@ -149,15 +149,15 @@
         }
         input[type="radio"]:checked + .option-label i,
         input[type="radio"]:checked + .option-label span {
-            color: white; /* Texte et icône en blanc quand sélectionné */
+            color: white; 
         }
 
         .navigation-buttons {
             display: flex;
-            justify-content: space-between;
-            margin-top: auto; /* Pousse les boutons vers le bas dans un conteneur flex */
-            padding-top: 20px; /* Espace au-dessus des boutons */
-            border-top: 1px solid var(--border-light); /* Ligne de séparation */
+            justify-content: flex-start; /* Aligner le bouton précédent à gauche */
+            margin-top: auto;
+            padding-top: 20px; 
+            border-top: 1px solid var(--border-light); 
         }
         .nav-button {
             padding: 12px 25px;
@@ -179,15 +179,6 @@
             background-color: #ddd;
             transform: translateY(-2px);
         }
-        .nav-button.next {
-            background-color: var(--secondary-orange);
-            color: white;
-            box-shadow: 0 4px 10px rgba(255, 127, 80, 0.3);
-        }
-        .nav-button.next:hover {
-            background-color: #e66a3d;
-            transform: translateY(-2px);
-        }
         .nav-button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
@@ -206,7 +197,7 @@
                 font-size: 1.5rem;
             }
             .options-group {
-                grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+                grid-template-columns: 1fr; 
             }
             .option-label {
                 padding: 15px;
@@ -396,7 +387,6 @@
 
             <div class="navigation-buttons">
                 <button type="button" class="nav-button prev" id="prevButton"><i class="fas fa-arrow-left"></i> Précédent</button>
-                <button type="submit" class="nav-button next" id="nextButton">Suivant <i class="fas fa-arrow-right"></i></button>
             </div>
         </form>
     </div>
@@ -405,8 +395,7 @@
         const quizForm = document.getElementById('quizForm');
         const progressBarFill = document.getElementById('progressBarFill');
         const progressText = document.getElementById('progressText');
-        const nextButton = document.getElementById('nextButton');
-        const prevButton = document.getElementById('prevButton');
+        const prevButton = document.getElementById('prevButton'); // On garde le bouton précédent
         const questions = document.querySelectorAll('.question-slide');
         const totalQuestions = questions.length;
         let currentQuestionIndex = 0;
@@ -418,31 +407,22 @@
             progressBarFill.style.width = `${progressPercentage}%`;
             progressText.textContent = `Question ${currentQuestionIndex + 1} / ${totalQuestions}`;
 
+            // Le bouton précédent est caché sur la première question
             prevButton.style.visibility = (currentQuestionIndex === 0) ? 'hidden' : 'visible';
-
-            if (currentQuestionIndex === totalQuestions - 1) {
-                nextButton.innerHTML = 'Terminer <i class="fas fa-check"></i>';
-            } else {
-                nextButton.innerHTML = 'Suivant <i class="fas fa-arrow-right"></i>';
-            }
-            checkIfAnswerSelected();
         }
 
         function showQuestion(index) {
             questions.forEach((q, i) => {
-                // Cache toutes les questions
                 q.classList.remove('active');
                 q.style.opacity = '0';
                 q.style.transform = 'translateY(20px)';
-                q.style.display = 'none'; // Cache complètement après transition si pas active
+                q.style.display = 'none'; 
             });
 
-            // Affiche la nouvelle question
             const newQuestion = questions[index];
-            newQuestion.style.display = 'block'; // Rend visible d'abord
-            // Petit délai pour permettre au navigateur d'appliquer 'display: block' avant la transition
+            newQuestion.style.display = 'block'; 
             setTimeout(() => {
-                newQuestion.classList.add('active'); // Déclenche la transition d'opacité et de transform
+                newQuestion.classList.add('active'); 
                 newQuestion.style.opacity = '1';
                 newQuestion.style.transform = 'translateY(0)';
             }, 50);
@@ -450,56 +430,36 @@
             updateProgressBar();
         }
 
-        function checkIfAnswerSelected() {
-            const currentQuestionElement = questions[currentQuestionIndex];
-            // S'assurer que currentQuestionElement existe avant de tenter d'accéder à ses propriétés
-            if (!currentQuestionElement) {
-                nextButton.disabled = true; // Si la question n'est pas trouvée, désactiver le bouton
-                return;
-            }
-            const radioGroupName = currentQuestionElement.querySelector('input[type="radio"]').name;
-            const selectedOption = quizForm.querySelector(`input[name="${radioGroupName}"]:checked`);
-            nextButton.disabled = !selectedOption;
-        }
-
+        // Écouteur d'événement pour le changement de sélection dans le quiz
         quizForm.addEventListener('change', function(event) {
+            // Vérifie si l'élément changé est un bouton radio et qu'il est dans une question-slide
             if (event.target.type === 'radio' && event.target.closest('.question-slide')) {
-                checkIfAnswerSelected();
+                const currentQuestionElement = questions[currentQuestionIndex];
+                const radioGroupName = event.target.name; // Le nom du groupe de radio actuel
+                const selectedOption = event.target; // L'option qui vient d'être sélectionnée
+
+                if (selectedOption.checked) { // S'assurer que l'option est bien cochée
+                    userAnswers[radioGroupName] = selectedOption.value;
+                    console.log("Réponse enregistrée pour", radioGroupName, ":", selectedOption.value);
+                    console.log("Toutes les réponses de l'utilisateur:", userAnswers);
+
+                    // Avancement automatique après un court délai pour une meilleure UX
+                    setTimeout(() => {
+                        if (currentQuestionIndex < totalQuestions - 1) {
+                            currentQuestionIndex++;
+                            showQuestion(currentQuestionIndex);
+                        } else {
+                            // Quiz terminé, redirection vers la page de résultats
+                            console.log("Quiz Terminé! Réponses finales:", userAnswers);
+                            localStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
+                            window.location.href = 'profil_resultat.html';
+                        }
+                    }, 500); // Délai de 500 millisecondes
+                }
             }
         });
 
-        nextButton.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const currentQuestionElement = questions[currentQuestionIndex];
-            if (!currentQuestionElement) { // Sécurité supplémentaire
-                console.error("Erreur: Impossible de trouver la question actuelle à l'index", currentQuestionIndex);
-                return;
-            }
-
-            const radioGroupName = currentQuestionElement.querySelector('input[type="radio"]').name;
-            const selectedOption = quizForm.querySelector(`input[name="${radioGroupName}"]:checked`);
-
-            if (!selectedOption) {
-                alert("Veuillez sélectionner une option pour continuer.");
-                return;
-            }
-
-            userAnswers[radioGroupName] = selectedOption.value;
-            console.log("Réponse enregistrée pour", radioGroupName, ":", selectedOption.value);
-            console.log("Toutes les réponses de l'utilisateur:", userAnswers);
-
-            if (currentQuestionIndex < totalQuestions - 1) {
-                currentQuestionIndex++;
-                showQuestion(currentQuestionIndex);
-            } else {
-                console.log("Quiz Terminé! Réponses finales:", userAnswers);
-                localStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
-                // Redirection vers la page de résultat/transition finale
-                window.location.href = 'profil_resultat.html'; 
-            }
-        });
-
+        // Écouteur d'événement pour le bouton "Précédent"
         prevButton.addEventListener('click', function() {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
@@ -507,7 +467,7 @@
             }
         });
 
-        // Initialiser le quiz
+        // Initialiser le quiz en affichant la première question
         showQuestion(currentQuestionIndex);
     </script>
 
