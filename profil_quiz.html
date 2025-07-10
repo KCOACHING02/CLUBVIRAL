@@ -37,6 +37,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            overflow-x: hidden; /* Prévient le défilement horizontal dû aux transitions */
         }
         .container {
             background-color: var(--bg-white);
@@ -46,7 +47,8 @@
             max-width: 700px;
             width: 100%;
             box-sizing: border-box;
-            position: relative; /* Pour positionner la barre de progression */
+            position: relative;
+            overflow: hidden; /* Cache les questions qui ne sont pas "active" */
         }
 
         .progress-bar-container {
@@ -72,6 +74,28 @@
             margin-bottom: 20px;
         }
 
+        /* Styles des slides de questions */
+        .question-slide {
+            display: none; /* Cache toutes les questions par défaut */
+            transform: translateX(100%); /* Prépare la transition */
+            opacity: 0;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            position: absolute;
+            top: 130px; /* Ajuster selon la hauteur de la barre de progression et marges */
+            left: 40px; /* Marge interne du container */
+            right: 40px; /* Marge interne du container */
+            width: calc(100% - 80px); /* Largeur du contenu des questions */
+        }
+        .question-slide.active {
+            display: block; /* Affiche la question active */
+            transform: translateX(0%); /* Anime vers le centre */
+            opacity: 1;
+            position: relative; /* Repositionne la question active dans le flux normal */
+        }
+        .question-slide.inactive-left { /* Pour l'animation de retour arrière */
+            transform: translateX(-100%);
+            opacity: 0;
+        }
 
         h2.question-title {
             font-size: 1.8rem;
@@ -197,6 +221,12 @@
                 padding: 10px 20px;
                 font-size: 1rem;
             }
+             .question-slide {
+                top: 110px; /* Ajustement pour mobile */
+                left: 20px;
+                right: 20px;
+                width: calc(100% - 40px);
+            }
         }
     </style>
 </head>
@@ -209,35 +239,35 @@
         <p class="progress-text" id="progressText">Question 1 / 5</p>
 
         <form id="quizForm">
-            <div class="question-slide active" data-question-id="1">
+            <div class="question-slide" data-question-id="1">
                 <h2 class="question-title">Quel est votre objectif principal en explorant la vente sur les réseaux sociaux ?</h2>
                 <div class="options-group">
                     <div>
-                        <input type="radio" id="obj1" name="objective" value="Vivre de ma passion" required>
+                        <input type="radio" id="obj1" name="q1_objective" value="Vivre de ma passion" required>
                         <label for="obj1" class="option-label">
                             <i class="fas fa-heart"></i> <span>Vivre pleinement de ma passion et en faire mon métier.</span>
                         </label>
                     </div>
                     <div>
-                        <input type="radio" id="obj2" name="objective" value="Quitter mon emploi" required>
+                        <input type="radio" id="obj2" name="q1_objective" value="Quitter mon emploi" required>
                         <label for="obj2" class="option-label">
                             <i class="fas fa-briefcase-medical"></i> <span>Quitter mon emploi actuel et devenir mon propre patron.</span>
                         </label>
                     </div>
                     <div>
-                        <input type="radio" id="obj3" name="objective" value="Indépendance financière" required>
+                        <input type="radio" id="obj3" name="q1_objective" value="Indépendance financière" required>
                         <label for="obj3" class="option-label">
                             <i class="fas fa-dollar-sign"></i> <span>Atteindre l'indépendance financière et avoir plus de liberté.</span>
                         </label>
                     </div>
                     <div>
-                        <input type="radio" id="obj4" name="objective" value="Arrondir fins de mois" required>
+                        <input type="radio" id="obj4" name="q1_objective" value="Arrondir fins de mois" required>
                         <label for="obj4" class="option-label">
                             <i class="fas fa-coins"></i> <span>Arrondir mes fins de mois ou générer un revenu complémentaire.</span>
                         </label>
                     </div>
                      <div>
-                        <input type="radio" id="obj5" name="objective" value="Revenus stables" required>
+                        <input type="radio" id="obj5" name="q1_objective" value="Revenus stables" required>
                         <label for="obj5" class="option-label">
                             <i class="fas fa-chart-line"></i> <span>Développer une source de revenus stable et évolutive.</span>
                         </label>
@@ -245,8 +275,134 @@
                 </div>
             </div>
 
+            <div class="question-slide" data-question-id="2">
+                <h2 class="question-title">Quelle est votre principale difficulté actuelle pour générer des ventes sur les réseaux sociaux ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="diff1" name="q2_difficulty" value="Attirer prospects" required>
+                        <label for="diff1" class="option-label">
+                            <i class="fas fa-user-plus"></i> <span>Attirer de nouveaux prospects qualifiés et intéressés.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff2" name="q2_difficulty" value="Convertir abonnés" required>
+                        <label for="diff2" class="option-label">
+                            <i class="fas fa-shopping-cart"></i> <span>Convertir mes abonnés ou mes contacts en acheteurs.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff3" name="q2_difficulty" value="Créer contenu" required>
+                        <label for="diff3" class="option-label">
+                            <i class="fas fa-pencil-alt"></i> <span>Créer du contenu qui capte l'attention et pousse à l'achat.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff4" name="q2_difficulty" value="Comprendre algorithmes" required>
+                        <label for="diff4" class="option-label">
+                            <i class="fas fa-cogs"></i> <span>Comprendre et maîtriser les algorithmes des plateformes.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="diff5" name="q2_difficulty" value="Manque temps stratégie" required>
+                        <label for="diff5" class="option-label">
+                            <i class="fas fa-hourglass-half"></i> <span>Manque de temps ou de stratégie claire et efficace.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-slide" data-question-id="3">
+                <h2 class="question-title">Quel est votre niveau d'engagement sur les réseaux sociaux au quotidien ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="eng1" name="q3_engagement" value="Consommateur passif" required>
+                        <label for="eng1" class="option-label">
+                            <i class="fas fa-eye"></i> <span>Je suis plutôt un consommateur passif, je regarde plus que je n'interagis.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="eng2" name="q3_engagement" value="Utilisateur actif" required>
+                        <label for="eng2" class="option-label">
+                            <i class="fas fa-comment-dots"></i> <span>Je suis un utilisateur actif, je commente et j'aime régulièrement.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="eng3" name="q3_engagement" value="Créateur occasionnel" required>
+                        <label for="eng3" class="option-label">
+                            <i class="fas fa-camera"></i> <span>Je crée du contenu occasionnellement pour mon profil personnel ou professionnel.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="eng4" name="q3_engagement" value="Créateur régulier" required>
+                        <label for="eng4" class="option-label">
+                            <i class="fas fa-share-alt"></i> <span>Je crée et partage du contenu régulièrement avec l'objectif de développer ma présence.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-slide" data-question-id="4">
+                <h2 class="question-title">Qu'est-ce qui vous freine le plus aujourd'hui dans le développement de vos ventes en ligne ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="frein1" name="q4_frein" value="Peur de l'échec" required>
+                        <label for="frein1" class="option-label">
+                            <i class="fas fa-frown"></i> <span>La peur de l'échec ou de ne pas être à la hauteur.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="frein2" name="q4_frein" value="Manque de connaissances" required>
+                        <label for="frein2" class="option-label">
+                            <i class="fas fa-book"></i> <span>Le manque de connaissances et de techniques spécifiques.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="frein3" name="q4_frein" value="Manque de temps" required>
+                        <label for="frein3" class="option-label">
+                            <i class="fas fa-clock"></i> <span>Le temps que cela demande et la difficulté à s'organiser.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="frein4" name="q4_frein" value="Compétences techniques" required>
+                        <label for="frein4" class="option-label">
+                            <i class="fas fa-laptop-code"></i> <span>Mes compétences techniques limitées avec les outils en ligne.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-slide" data-question-id="5">
+                <h2 class="question-title">Êtes-vous prêt(e) à investir du temps et de l'énergie dans une approche structurée pour transformer vos ventes et atteindre vos objectifs ?</h2>
+                <div class="options-group">
+                    <div>
+                        <input type="radio" id="ready1" name="q5_readiness" value="Oui, absolument" required>
+                        <label for="ready1" class="option-label">
+                            <i class="fas fa-rocket"></i> <span>Oui, absolument ! Je suis ultra-motivé(e) et prêt(e) à tout mettre en œuvre.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="ready2" name="q5_readiness" value="Oui, si résultats concrets" required>
+                        <label for="ready2" class="option-label">
+                            <i class="fas fa-lightbulb"></i> <span>Oui, si cela m'apporte des résultats concrets et mesurables.</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="ready3" name="q5_readiness" value="J'hésite" required>
+                        <label for="ready3" class="option-label">
+                            <i class="fas fa-question-circle"></i> <span>J'y pense, mais j'hésite encore sur l'engagement à long terme.</span>
+                        </label>
+                    </div>
+                     <div>
+                        <input type="radio" id="ready4" name="q5_readiness" value="Pas vraiment" required>
+                        <label for="ready4" class="option-label">
+                            <i class="fas fa-times-circle"></i> <span>Pas vraiment, je cherche plutôt des solutions rapides sans effort majeur.</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <div class="navigation-buttons">
-                <button type="button" class="nav-button prev" id="prevButton" style="visibility: hidden;"><i class="fas fa-arrow-left"></i> Précédent</button>
+                <button type="button" class="nav-button prev" id="prevButton"><i class="fas fa-arrow-left"></i> Précédent</button>
                 <button type="submit" class="nav-button next" id="nextButton">Suivant <i class="fas fa-arrow-right"></i></button>
             </div>
         </form>
@@ -258,96 +414,117 @@
         const progressText = document.getElementById('progressText');
         const nextButton = document.getElementById('nextButton');
         const prevButton = document.getElementById('prevButton');
+        const questions = document.querySelectorAll('.question-slide');
+        const totalQuestions = questions.length; // Maintenant, il y a 5 questions
         let currentQuestionIndex = 0;
-        const questions = document.querySelectorAll('.question-slide'); // Chaque question est un "slide"
-        const totalQuestions = questions.length; // Pour l'instant 1, mais sera ajusté
 
-        // Simule un stockage des réponses. En production, on utiliserait localStorage ou une base de données.
-        let userAnswers = {}; 
+        let userAnswers = {}; // Stocke les réponses sous forme { q1_objective: "...", q2_difficulty: "...", ... }
 
-        // Initialisation de la barre de progression (pour l'exemple avec 5 questions totales)
-        const quizMaxQuestions = 5; // Définissez le nombre total de questions que vous prévoyez
-        
         function updateProgressBar() {
-            const progressPercentage = ((currentQuestionIndex + 1) / quizMaxQuestions) * 100;
+            const progressPercentage = ((currentQuestionIndex + 1) / totalQuestions) * 100;
             progressBarFill.style.width = `${progressPercentage}%`;
-            progressText.textContent = `Question ${currentQuestionIndex + 1} / ${quizMaxQuestions}`;
-            
-            // Masquer/afficher les boutons de navigation
-            if (currentQuestionIndex === 0) {
-                prevButton.style.visibility = 'hidden';
-            } else {
-                prevButton.style.visibility = 'visible';
-            }
+            progressText.textContent = `Question ${currentQuestionIndex + 1} / ${totalQuestions}`;
 
-            // Si c'est la dernière question, le bouton "Suivant" deviendra "Terminer"
-            if (currentQuestionIndex === totalQuestions -1 && totalQuestions === quizMaxQuestions) { // Vérifie si c'est la dernière question ET la dernière étape du quiz
-                 nextButton.innerHTML = 'Terminer <i class="fas fa-check"></i>';
+            // Gère la visibilité du bouton Précédent
+            prevButton.style.visibility = (currentQuestionIndex === 0) ? 'hidden' : 'visible';
+
+            // Gère le texte du bouton Suivant/Terminer
+            if (currentQuestionIndex === totalQuestions - 1) {
+                nextButton.innerHTML = 'Terminer <i class="fas fa-check"></i>';
+                nextButton.type = 'submit'; // S'assure que c'est bien un submit pour la dernière question
             } else {
-                 nextButton.innerHTML = 'Suivant <i class="fas fa-arrow-right"></i>';
+                nextButton.innerHTML = 'Suivant <i class="fas fa-arrow-right"></i>';
+                nextButton.type = 'submit'; // Garde-le en submit pour que le listener fonctionne
             }
+            checkIfAnswerSelected(); // Vérifie si une réponse est sélectionnée pour activer/désactiver le bouton Suivant
         }
 
-        function showQuestion(index) {
+        function showQuestion(index, direction = 'next') {
             questions.forEach((q, i) => {
-                q.classList.remove('active');
+                // Cache la question actuelle avec une animation si on change de question
+                if (q.classList.contains('active')) {
+                    if (direction === 'next') {
+                        q.style.transform = 'translateX(-100%)';
+                    } else { // 'prev'
+                        q.style.transform = 'translateX(100%)';
+                    }
+                    q.style.opacity = '0';
+                    q.classList.remove('active');
+                    // On peut ajouter un délai pour que l'animation se termine avant de masquer
+                    setTimeout(() => { q.style.display = 'none'; }, 500); // 500ms = durée transition
+                }
+
+                // Affiche la nouvelle question
                 if (i === index) {
-                    q.classList.add('active');
+                    q.style.display = 'block';
+                    // Petit délai pour permettre au display:block de prendre effet avant la transition
+                    setTimeout(() => {
+                        if (direction === 'next') {
+                            q.style.transform = 'translateX(0%)';
+                        } else { // 'prev'
+                             q.style.transform = 'translateX(0%)';
+                        }
+                        q.style.opacity = '1';
+                        q.classList.add('active');
+                    }, 50); // Petit délai pour la fluidité
                 }
             });
             updateProgressBar();
-            // Désactiver le bouton suivant si aucune option n'est sélectionnée
-            const selectedOption = quizForm.querySelector(`input[name="objective"]:checked`);
+        }
+
+        // Fonction pour vérifier si une réponse est sélectionnée pour la question actuelle
+        function checkIfAnswerSelected() {
+            const currentQuestionElement = questions[currentQuestionIndex];
+            const radioGroupName = currentQuestionElement.querySelector('input[type="radio"]').name;
+            const selectedOption = quizForm.querySelector(`input[name="${radioGroupName}"]:checked`);
             nextButton.disabled = !selectedOption;
         }
 
+        // Listener sur le formulaire entier pour détecter les changements de radio (sélection d'option)
         quizForm.addEventListener('change', function(event) {
-            // Activer le bouton Suivant dès qu'une option est choisie
-            if (event.target.type === 'radio' && event.target.name === 'objective') {
-                nextButton.disabled = false;
+            if (event.target.type === 'radio' && event.target.closest('.question-slide').classList.contains('active')) {
+                checkIfAnswerSelected();
             }
         });
 
+        // Listener pour le bouton "Suivant"
+        nextButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche la soumission par défaut si ce n'est pas la dernière question
 
-        quizForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche la soumission du formulaire par défaut
+            const currentQuestionElement = questions[currentQuestionIndex];
+            const radioGroupName = currentQuestionElement.querySelector('input[type="radio"]').name;
+            const selectedOption = quizForm.querySelector(`input[name="${radioGroupName}"]:checked`);
 
-            const selectedOption = quizForm.querySelector('input[name="objective"]:checked');
             if (!selectedOption) {
                 alert("Veuillez sélectionner une option pour continuer.");
                 return;
             }
 
             // Enregistre la réponse
-            userAnswers[`q${currentQuestionIndex + 1}`] = selectedOption.value;
+            userAnswers[radioGroupName] = selectedOption.value;
             console.log("Réponse enregistrée:", userAnswers); // Pour le débogage
 
-            // Logique pour passer à la question suivante ou terminer le quiz
             if (currentQuestionIndex < totalQuestions - 1) {
                 currentQuestionIndex++;
-                showQuestion(currentQuestionIndex);
+                showQuestion(currentQuestionIndex, 'next');
             } else {
-                // Pour l'instant, quand toutes les questions sont répondues, on simule une redirection
-                // En réalité, vous enverriez les userAnswers à profil_resultat.html
-                // Via localStorage, sessionStorage, ou paramètres d'URL si peu de données
+                // Dernière question, on redirige vers la page de résultats
                 console.log("Quiz Terminé! Réponses finales:", userAnswers);
-
-                // Exemple de redirection vers la page de résultats
-                // Pour passer les réponses, on peut les stocker temporairement ou les passer en paramètres d'URL (limité en taille)
                 localStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
                 window.location.href = 'profil_resultat.html';
             }
         });
 
+        // Listener pour le bouton "Précédent"
         prevButton.addEventListener('click', function() {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
-                showQuestion(currentQuestionIndex);
+                showQuestion(currentQuestionIndex, 'prev');
             }
         });
 
         // Initialiser le quiz
-        showQuestion(currentQuestionIndex);
+        showQuestion(currentQuestionIndex); // Affiche la première question au chargement
     </script>
 
 </body>
