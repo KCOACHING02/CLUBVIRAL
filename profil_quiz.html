@@ -154,7 +154,7 @@
 
         .navigation-buttons {
             display: flex;
-            justify-content: flex-start; /* Aligner le bouton précédent à gauche */
+            justify-content: flex-start; 
             margin-top: auto;
             padding-top: 20px; 
             border-top: 1px solid var(--border-light); 
@@ -205,7 +205,7 @@
                 min-height: auto;
             }
             .option-label span {
-                font-size: 1rem;
+                font-size: 1.1rem; /* Adjust if needed */
             }
             .nav-button {
                 padding: 10px 20px;
@@ -224,7 +224,7 @@
 
         <form id="quizForm">
             <div class="question-slide" data-question-id="1">
-                <h2 class="question-title">Quel est votre objectif principal en explorant la vente sur les réseaux sociaux ?</h2>
+                <h2 class="question-title">Quel est ton objectif principal en explorant la vente sur les réseaux sociaux ?</h2>
                 <div class="options-group">
                     <div>
                         <input type="radio" id="obj1" name="q1_objective" value="Vivre de ma passion" required>
@@ -260,7 +260,7 @@
             </div>
 
             <div class="question-slide" data-question-id="2">
-                <h2 class="question-title">Quelle est votre principale difficulté actuelle pour générer des ventes sur les réseaux sociaux ?</h2>
+                <h2 class="question-title">Quelle est ta principale difficulté actuelle pour générer des ventes sur les réseaux sociaux ?</h2>
                 <div class="options-group">
                     <div>
                         <input type="radio" id="diff1" name="q2_difficulty" value="Attirer prospects" required>
@@ -296,7 +296,7 @@
             </div>
 
             <div class="question-slide" data-question-id="3">
-                <h2 class="question-title">Quel est votre niveau d'engagement sur les réseaux sociaux au quotidien ?</h2>
+                <h2 class="question-title">Quel est ton niveau d'engagement sur les réseaux sociaux au quotidien ?</h2>
                 <div class="options-group">
                     <div>
                         <input type="radio" id="eng1" name="q3_engagement" value="Consommateur passif" required>
@@ -326,7 +326,7 @@
             </div>
 
             <div class="question-slide" data-question-id="4">
-                <h2 class="question-title">Qu'est-ce qui vous freine le plus aujourd'hui dans le développement de vos ventes en ligne ?</h2>
+                <h2 class="question-title">Qu'est-ce qui te freine le plus aujourd'hui dans le développement de tes ventes en ligne ?</h2>
                 <div class="options-group">
                     <div>
                         <input type="radio" id="frein1" name="q4_frein" value="Peur de l'échec" required>
@@ -356,7 +356,7 @@
             </div>
 
             <div class="question-slide" data-question-id="5">
-                <h2 class="question-title">Êtes-vous prêt(e) à investir du temps et de l'énergie dans une approche structurée pour transformer vos ventes et atteindre vos objectifs ?</h2>
+                <h2 class="question-title">Es-tu prêt(e) à investir du temps et de l'énergie dans une approche structurée pour transformer tes ventes et atteindre tes objectifs ?</h2>
                 <div class="options-group">
                     <div>
                         <input type="radio" id="ready1" name="q5_readiness" value="Oui, absolument" required>
@@ -395,7 +395,7 @@
         const quizForm = document.getElementById('quizForm');
         const progressBarFill = document.getElementById('progressBarFill');
         const progressText = document.getElementById('progressText');
-        const prevButton = document.getElementById('prevButton'); // On garde le bouton précédent
+        const prevButton = document.getElementById('prevButton'); 
         const questions = document.querySelectorAll('.question-slide');
         const totalQuestions = questions.length;
         let currentQuestionIndex = 0;
@@ -407,7 +407,6 @@
             progressBarFill.style.width = `${progressPercentage}%`;
             progressText.textContent = `Question ${currentQuestionIndex + 1} / ${totalQuestions}`;
 
-            // Le bouton précédent est caché sur la première question
             prevButton.style.visibility = (currentQuestionIndex === 0) ? 'hidden' : 'visible';
         }
 
@@ -430,36 +429,31 @@
             updateProgressBar();
         }
 
-        // Écouteur d'événement pour le changement de sélection dans le quiz
         quizForm.addEventListener('change', function(event) {
-            // Vérifie si l'élément changé est un bouton radio et qu'il est dans une question-slide
             if (event.target.type === 'radio' && event.target.closest('.question-slide')) {
                 const currentQuestionElement = questions[currentQuestionIndex];
-                const radioGroupName = event.target.name; // Le nom du groupe de radio actuel
-                const selectedOption = event.target; // L'option qui vient d'être sélectionnée
+                const radioGroupName = event.target.name; 
+                const selectedOption = event.target; 
 
-                if (selectedOption.checked) { // S'assurer que l'option est bien cochée
+                if (selectedOption.checked) { 
                     userAnswers[radioGroupName] = selectedOption.value;
                     console.log("Réponse enregistrée pour", radioGroupName, ":", selectedOption.value);
                     console.log("Toutes les réponses de l'utilisateur:", userAnswers);
 
-                    // Avancement automatique après un court délai pour une meilleure UX
                     setTimeout(() => {
                         if (currentQuestionIndex < totalQuestions - 1) {
                             currentQuestionIndex++;
                             showQuestion(currentQuestionIndex);
                         } else {
-                            // Quiz terminé, redirection vers la page de résultats
                             console.log("Quiz Terminé! Réponses finales:", userAnswers);
                             localStorage.setItem('quizAnswers', JSON.stringify(userAnswers));
                             window.location.href = 'profil_resultat.html';
                         }
-                    }, 500); // Délai de 500 millisecondes
+                    }, 500); 
                 }
             }
         });
 
-        // Écouteur d'événement pour le bouton "Précédent"
         prevButton.addEventListener('click', function() {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
@@ -467,7 +461,6 @@
             }
         });
 
-        // Initialiser le quiz en affichant la première question
         showQuestion(currentQuestionIndex);
     </script>
 
