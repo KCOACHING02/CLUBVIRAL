@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCoaching - Découvrez Votre Potentiel Ventes Sociales</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --secondary-orange: #ff7f50;
+            --text-dark: #2c3e50;
+            --text-medium: #555;
+            --text-light: #777;
+            --bg-light: #f4f7f6;
+            --bg-white: #ffffff;
+            --border-light: #eee;
+            --shadow-light: rgba(0,0,0,0.08);
+            --shadow-medium: rgba(0,0,0,0.12);
+            --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e8f0ef 100%);
+            color: var(--text-medium);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: var(--bg-white);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px var(--shadow-light);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+        }
+        .start-button {
+            display: inline-flex; /* Pour centrer le contenu */
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background-color: var(--secondary-orange);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(255, 127, 80, 0.3);
+        }
+        .start-button:hover {
+            background-color: #e66a3d;
+            transform: translateY(-2px);
+        }
+        .start-button i {
+            font-size: 1.4rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .start-button {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Découvrez le Profil du Vendeur Social en Vous ! <i class="fas fa-lightbulb"></i></h1>
+        <p>Répondez à quelques questions simples pour cerner votre potentiel et découvrir si notre formation est la clé pour propulser vos ventes sur les réseaux sociaux et atteindre vos objectifs de vie.</p>
+        <a href="profil_quiz.html" class="start-button">
+            Commencer le Test <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+</body>
+</html>
