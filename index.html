@@ -47,6 +47,10 @@
             width: 100%;
             text-align: center;
             box-sizing: border-box;
+            display: flex; /* Ajouté pour centrer l'image verticalement */
+            flex-direction: column; /* Ajouté pour centrer l'image verticalement */
+            align-items: center; /* Ajouté pour centrer l'image verticalement */
+            gap: 25px; /* Ajouté pour l'espacement entre les éléments */
         }
         h1 {
             font-size: 2.5rem;
@@ -59,6 +63,14 @@
             font-size: 1.1rem;
             margin-bottom: 30px;
             color: var(--text-dark);
+        }
+        /* Style pour l'image ajoutée */
+        .cta-image {
+            max-width: 250px; 
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px; /* Espace sous l'image */
         }
         .start-button {
             display: inline-flex; /* Pour centrer le contenu */
@@ -89,6 +101,9 @@
             p {
                 font-size: 1rem;
             }
+            .cta-image {
+                max-width: 200px; /* Plus petite sur mobile */
+            }
             .start-button {
                 padding: 12px 25px;
                 font-size: 1.1rem;
@@ -101,6 +116,9 @@
     <div class="container">
         <h1>Es-tu prêt(e) à lancer ton business en ligne ?</h1>
         <p>Réponds à quelques questions simples pour cerner ton potentiel et découvrir si notre formation est la clé pour propulser tes ventes sur les réseaux sociaux et atteindre tes objectifs de vie.</p>
+        
+        <img src="BRILLEETVIBRE.jpeg" alt="Image de Motivation KCoaching" class="cta-image">
+
         <a href="profil_quiz.html" class="start-button">
             Commencer le Test <i class="fas fa-arrow-right"></i>
         </a>
